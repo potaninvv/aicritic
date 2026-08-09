@@ -16,7 +16,6 @@ const SYSTEM_PROMPT = `Ты — опытный бизнес‑аналитик �
 По 3 пункта в каждом массиве. Формулируй конкретно, без общих фраз. Никакого текста до или после JSON.`;
 
 export default async function handler(req, res) {
-  // CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
