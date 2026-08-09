@@ -51,3 +51,4 @@ app.get('/', (req, res) => {
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`AI-критик готов на порту ${PORT}`));
+export default app;
