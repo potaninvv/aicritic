@@ -16,26 +16,22 @@ const SYSTEM_PROMPT = `Ты — опытный бизнес‑аналитик �
 По 3 пункта в каждом массиве. Формулируй конкретно, без общих фраз. Никакого текста до или после JSON.`;
 
 export default async function handler(req, res) {
-  // Разрешаем CORS
+  // CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-  // Обработка preflight-запросов (OPTIONS)
   if (req.method === 'OPTIONS') {
     return res.status(200).end();
   }
 
-  // Только POST
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Метод не разрешён. Используйте POST.' });
   }
 
   try {
     const { idea } = req.body;
-    if (!idea) {
-      return res.status(400).json({ error: 'Поле idea обязательно' });
-    }
+    if (!idea) return res.status(400).json({ error: 'Поле idea обязательно' });
 
     const response = await client.chat.completions.create({
       model: MODEL,
@@ -47,8 +43,7 @@ export default async function handler(req, res) {
       temperature: 0.7,
     });
 
-    const raw = response.choices[0].message.content;
-    const parsed = JSON.parse(raw);
+    const parsed = JSON.parse(response.choices[0].message.content);
     res.status(200).json(parsed);
   } catch (e) {
     console.error(e);
